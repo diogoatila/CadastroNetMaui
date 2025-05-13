@@ -1,4 +1,9 @@
-﻿namespace ClienteCadastroApp
+﻿using Microsoft.UI.Windowing;
+using Microsoft.UI;
+using System.Diagnostics;
+using WinRT.Interop;
+
+namespace ClienteCadastroApp
 {
     public partial class App : Application
     {
@@ -19,6 +24,7 @@
             window.Height = 768;
             window.MaximumWidth = double.PositiveInfinity;
             window.MaximumHeight = double.PositiveInfinity;
+          
             return window;
         }
     }

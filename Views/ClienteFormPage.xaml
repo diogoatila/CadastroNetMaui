@@ -7,7 +7,6 @@
 
     <Grid RowDefinitions="*,Auto" Padding="20" BackgroundColor="#F0F0F0">
 
-        <!-- Área do formulário -->
         <ScrollView Grid.Row="0">
             <Frame CornerRadius="10"
                    BorderColor="Gray"
@@ -21,48 +20,52 @@
                     <Entry Placeholder="Nome"
                            Text="{Binding Cliente.Name}"
                            BackgroundColor="#F5F5F5"
-                           HeightRequest="40" />
+                           TextColor="Black"
+                           HeightRequest="40"
+                           TextChanged="OnNameTextChanged" />
 
                     <Entry Placeholder="Sobrenome"
                            Text="{Binding Cliente.Lastname}"
                            BackgroundColor="#F5F5F5"
-                           HeightRequest="40" />
+                           TextColor="Black"
+                           HeightRequest="40"
+                           TextChanged="OnLastnameTextChanged" />
 
                     <Entry Placeholder="Idade"
                            Text="{Binding Cliente.Age}"
                            Keyboard="Numeric"
                            BackgroundColor="#F5F5F5"
-                           HeightRequest="40" />
+                           TextColor="Black"
+                           HeightRequest="40"
+                           TextChanged="OnAgeTextChanged" />
 
                     <Entry Placeholder="Endereço"
                            Text="{Binding Cliente.Address}"
                            BackgroundColor="#F5F5F5"
+                           TextColor="Black"
                            HeightRequest="40" />
+
+                    <HorizontalStackLayout Spacing="20"
+                                           HorizontalOptions="EndAndExpand"
+                                           VerticalOptions="End">
+                        <Button Text="Salvar"
+                                Command="{Binding SalvarCommand}"
+                                BackgroundColor="#007AFF"
+                                TextColor="White"
+                                CornerRadius="10"
+                                WidthRequest="100" />
+
+                        <Button Text="Cancelar"
+                                Command="{Binding CancelarCommand}"
+                                BackgroundColor="#CCCCCC"
+                                TextColor="Black"
+                                CornerRadius="10"
+                                WidthRequest="100" />
+                    </HorizontalStackLayout>
 
                 </VerticalStackLayout>
             </Frame>
         </ScrollView>
-
-        <!-- Botões fixos no final -->
-        <HorizontalStackLayout Grid.Row="1"
-                               Spacing="20"
-                               HorizontalOptions="Center"
-                               VerticalOptions="End">
-
-            <Button Text="Salvar"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ClientesViewModel}}, Path=SalvarCommand}"
-                    BackgroundColor="#007AFF"
-                    TextColor="White"
-                    CornerRadius="10"
-                    WidthRequest="100" />
-
-            <Button Text="Cancelar"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ClientesViewModel}}, Path=CancelarCommand}"
-                    BackgroundColor="#CCCCCC"
-                    TextColor="Black"
-                    CornerRadius="10"
-                    WidthRequest="100" />
-        </HorizontalStackLayout>
 
     </Grid>
 </ContentPage>

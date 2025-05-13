@@ -12,7 +12,21 @@ public partial class ClientesViewModel : ObservableObject
     private readonly IClienteService _clienteService;
     private readonly INavigationService _navigation;
 
-    public ObservableCollection<Cliente> Clientes => _clienteService.Clientes;
+    private ObservableCollection<Cliente> _clientes;
+    public ObservableCollection<Cliente> Clientes
+    {
+        get => _clientes;
+        set => SetProperty(ref _clientes, value);
+    }
+
+
+    private Cliente _cliente;
+    public Cliente Cliente
+    {
+        get => _cliente;
+        set => SetProperty(ref _cliente, value);
+    }
+
 
     public ICommand AdicionarCommand { get; }
     public ICommand EditarCommand { get; }
@@ -20,12 +34,13 @@ public partial class ClientesViewModel : ObservableObject
     public ICommand SalvarCommand { get; }
     public ICommand CancelarCommand { get; }
 
-    private Cliente _cliente;
+
     public ClientesViewModel(IClienteService clienteService, INavigationService navigationService, Cliente cliente = null)
     {
         _clienteService = clienteService;
         _navigation = navigationService;
-        _cliente = cliente ?? new Cliente();
+        Cliente = cliente ?? new Cliente();
+
 
 
         AdicionarCommand = new RelayCommand(AdicionarCliente);
@@ -35,6 +50,11 @@ public partial class ClientesViewModel : ObservableObject
         CancelarCommand = new RelayCommand(Cancelar);
     }
 
+    public async Task CarregarClientesAsync()
+    {
+        var lista = await _clienteService.ObterTodosAsync();
+        Clientes = new ObservableCollection<Cliente>(lista);
+    }
     private async void AdicionarCliente()
     {
         await _navigation.PushModalAsync(new ClienteFormPage());
@@ -60,24 +80,42 @@ public partial class ClientesViewModel : ObservableObject
         if (confirmar)
         {
             _clienteService.Remover(cliente);
+
+            //Remove do Grid
+            Clientes.Remove(cliente);
         }
     }
 
     private async void Salvar()
     {
-        if (string.IsNullOrWhiteSpace(_cliente.Name) || string.IsNullOrWhiteSpace(_cliente.Lastname))
+        if (string.IsNullOrWhiteSpace(Cliente.Name) || string.IsNullOrWhiteSpace(Cliente.Lastname))
         {
             await Application.Current.MainPage.DisplayAlert("Erro", "Nome e Sobrenome são obrigatórios.", "OK");
             return;
         }
 
-        if (!_clienteService.Clientes.Contains(_cliente))
-        {
-            _clienteService.Adicionar(_cliente);
-        }
+    var existente = _clienteService.Clientes.FirstOrDefault(c => c.Id == Cliente.Id);
 
-        await _navigation.PopModalAsync(); // Volta para MainPage
+    if (existente != null)
+    {
+        // Se o cliente já existe, atualiza as propriedades da instância existente
+        existente.Name = Cliente.Name;
+        existente.Lastname = Cliente.Lastname;
+        existente.Age = Cliente.Age;
+        existente.Address = Cliente.Address;
+
+         await _clienteService.Atualizar(existente); 
     }
+    else
+    {
+        // Se o cliente não está na lista, adiciona um novo
+        await _clienteService.Adicionar(Cliente);
+     
+    }
+
+        await _navigation.PopModalAsync(); 
+    }
+
 
     private async void Cancelar()
     {

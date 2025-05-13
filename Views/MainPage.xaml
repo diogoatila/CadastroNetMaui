@@ -1,60 +1,136 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:local="clr-namespace:ClienteCadastroApp.ViewModels"
-             x:Class="ClienteCadastroApp.MainPage"
-             Title="Lista de Clientes">
+             x:Class="ClienteCadastroApp.MainPage">
+    
+    <VerticalStackLayout Padding="20" Spacing="20"          
+                         BackgroundColor ="#F5F5F5">
 
-    <Grid RowDefinitions="Auto,*" Padding="20">
 
-        <!-- Botão Adicionar -->
-        <Button Text="Adicionar Cliente"
-                Command="{Binding AdicionarCommand}"
-                BackgroundColor="#007AFF"
-                TextColor="White"
-                CornerRadius="10"
-                HeightRequest="45"
-                Grid.Row="0" />
+        <Grid ColumnDefinitions="*,Auto" Padding="0">
+            <Label Text="Cadastro de Clientes"
+                   TextColor="Black"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start"/>
 
-        <!-- Lista de Clientes -->
-        <CollectionView Grid.Row="1"
-                        ItemsSource="{Binding Clientes}"
+            <Button Text="Adicionar"
+                    Command="{Binding AdicionarCommand}"
+                    BackgroundColor="#007AFF"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="40"
+                    WidthRequest="120"
+                    HorizontalOptions="End"
+                    Grid.Column="1" />
+        </Grid>
+
+
+       <Frame CornerRadius="10"
+       Padding="10"
+       Margin="0,10"
+       HasShadow="False"
+        BackgroundColor="#F5F5F5" 
+        BorderColor="#F5F5F5">
+            <Grid ColumnDefinitions="*,*,*,Auto,Auto"
+              VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand"
+              Padding="10">
+                <Label Grid.Column="0"
+                   Text="Nome"
+                   TextColor="Black"
+                   FontSize="16"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start" />
+                <Label Grid.Column="1"
+                   Text="Sobrenome"
+                   TextColor="Black"    
+                   FontSize="16"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start" />
+                <Label Grid.Column="2"
+                   Text="Idade"
+                   TextColor="Black"
+                   FontSize="16"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start" />
+                <Label Grid.Column="3"
+                   Text="Ações"
+                   TextColor="Black"
+                   FontSize="16"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   WidthRequest="170"
+                   Margin="5,0"/>
+            </Grid>
+        </Frame>
+
+        <CollectionView ItemsSource="{Binding Clientes}"
                         VerticalOptions="FillAndExpand">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame CornerRadius="10"
-                           Padding="15"
+                           Padding="10"
                            Margin="0,10"
                            BorderColor="#CCCCCC"
                            HasShadow="True"
                            BackgroundColor="White">
-                        <StackLayout Spacing="10">
-                            <Label Text="{Binding Name}"
+
+              
+                        <Grid ColumnDefinitions="*,*,*,Auto,Auto"
+                              VerticalOptions="Center"
+                              HorizontalOptions="FillAndExpand"
+                              Padding="10">
+
+                            <Label Grid.Column="0"
+                                   Text="{Binding Name}"
+                                   TextColor="Black"
                                    FontSize="18"
-                                   FontAttributes="Bold" />
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Start" />
 
-                            <HorizontalStackLayout Spacing="10" HorizontalOptions="End">
-                                <Button Text="Editar"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:ClientesViewModel}}, Path=EditarCommand}"
-                                        CommandParameter="{Binding .}"
-                                        BackgroundColor="#34C759"
-                                        TextColor="White"
-                                        CornerRadius="8"
-                                        WidthRequest="80" />
+                            <Label Grid.Column="1"
+                                   Text="{Binding Lastname}"
+                                   TextColor="Black"
+                                   FontSize="18"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Start" />
 
-                                <Button Text="Excluir"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:ClientesViewModel}}, Path=ExcluirCommand}"
-                                        CommandParameter="{Binding .}"
-                                        BackgroundColor="#FF3B30"
-                                        TextColor="White"
-                                        CornerRadius="8"
-                                        WidthRequest="80" />
-                            </HorizontalStackLayout>
-                        </StackLayout>
+                            <Label Grid.Column="2"
+                                   Text="{Binding Age}"
+                                   TextColor="Black"
+                                   FontSize="18"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Start" />
+
+                            <Button Grid.Column="3"
+                                    Text="Editar"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ClientesViewModel}}, Path=EditarCommand}"
+                                    CommandParameter="{Binding .}"
+                                    BackgroundColor="#34C759"
+                                    TextColor="White"
+                                    CornerRadius="8"
+                                    WidthRequest="80"
+                                    Margin="5,0"
+                                    HorizontalOptions="Center"/>
+
+                            <Button Grid.Column="4"
+                                    Text="Excluir"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ClientesViewModel}}, Path=ExcluirCommand}"
+                                    CommandParameter="{Binding .}"
+                                    BackgroundColor="#FF3B30"
+                                    TextColor="White"
+                                    CornerRadius="8"
+                                    WidthRequest="80"
+                                    Margin="5,0"
+                                    HorizontalOptions="Center"/>
+                        </Grid>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </Grid>
-
+    </VerticalStackLayout>
 </ContentPage>

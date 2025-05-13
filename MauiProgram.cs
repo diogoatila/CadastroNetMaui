@@ -1,4 +1,5 @@
-﻿using ClienteCadastroApp.Services;
+﻿using ClienteCadastroApp.Data;
+using ClienteCadastroApp.Services;
 using ClienteCadastroApp.ViewModels;
 using Microsoft.Extensions.Logging;
 
@@ -10,7 +11,7 @@ namespace ClienteCadastroApp
         {
             var builder = MauiApp.CreateBuilder();
 
-            // Configuração da aplicação
+           
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -24,12 +25,16 @@ namespace ClienteCadastroApp
 #endif
 
             // Registra os serviços de DI
+
+            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "clientes.db3");
+
+            builder.Services.AddSingleton(new ClienteDatabase(dbPath));
             builder.Services.AddSingleton<IClienteService, ClienteService>();
             builder.Services.AddSingleton<ClientesViewModel>();
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
 
-            // Criação do objeto MauiApp
+            
           return builder.Build();
 
     
