@@ -94,7 +94,7 @@ public partial class ClientesViewModel : ObservableObject
             return;
         }
 
-    var existente = _clienteService.Clientes.FirstOrDefault(c => c.Id == Cliente.Id);
+    var existente = await _clienteService.ObterPorIdAsync(Cliente.Id);
 
     if (existente != null)
     {

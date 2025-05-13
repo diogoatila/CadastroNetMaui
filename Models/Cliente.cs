@@ -8,17 +8,11 @@ public partial class Cliente : ObservableObject
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
+    public string Name { get; set; }
 
-    //Com a utilização de observable property não é possível escrever a propriedade com Letra maiúscula...
-    [ObservableProperty]
-    private string name;
+    public string Lastname { get; set; }
 
-    [ObservableProperty]
-    private string lastname;
+    public int? Age { get; set; }
 
-    [ObservableProperty]
-    private int? age;
-
-    [ObservableProperty]
-    private string address;
+    public string Address { get; set; }
 }

@@ -16,11 +16,19 @@ public class ClienteDatabase
     public Task<List<Cliente>> GetClientesAsync() =>
         _database.Table<Cliente>().ToListAsync();
 
+    public Task<Cliente> GetClienteByIdAsync(int id) =>
+        _database.Table<Cliente>()
+                 .Where(c => c.Id == id)
+                 .FirstOrDefaultAsync();
     public async Task SaveClienteAsync(Cliente cliente)
     {
-        await _database.InsertOrReplaceAsync(cliente);
+        await _database.InsertAsync(cliente);
     }
-      
+    public async Task UpdateClienteAsync(Cliente cliente)
+    {
+        await _database.UpdateAsync(cliente);
+    }
+
     public Task<int> DeleteClienteAsync(Cliente cliente) =>
         _database.DeleteAsync(cliente);
 }

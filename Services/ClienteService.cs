@@ -18,6 +18,8 @@ public class ClienteService : IClienteService
     public Task<List<Cliente>> ObterTodosAsync() =>
     _db.GetClientesAsync();
 
+    public Task<Cliente> ObterPorIdAsync(int id) =>
+    _db.GetClienteByIdAsync(id);
     private async Task LoadClientes()
     {
         var lista = await _db.GetClientesAsync();
@@ -41,7 +43,7 @@ public class ClienteService : IClienteService
 
     public async Task Atualizar(Cliente cliente)
     {
-        await _db.SaveClienteAsync(cliente);
+        await _db.UpdateClienteAsync(cliente);
 
         var existente = Clientes.FirstOrDefault(c => c.Id == cliente.Id);
         if (existente != null)
