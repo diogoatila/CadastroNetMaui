@@ -1,4 +1,7 @@
 Adicionado banco local com SQLite, basta executar a aplicação para criar o banco...
+Foram validadas todas as ações Inserir, Editar e Excluir.
+Os campos de Nome e Sobrenome possuem validação para somente letras e o campo Idade para somente números.
+
 ![image](https://github.com/user-attachments/assets/4209cf9c-a634-4016-a7b7-ebe500ff00bf)
 
 ![image](https://github.com/user-attachments/assets/a50c7bfb-c0e0-4224-af9b-9a60072a9d9e)
